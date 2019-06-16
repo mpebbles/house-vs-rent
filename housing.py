@@ -2,11 +2,16 @@
 # the other is value at the end of years
 
 years = 30
-rent_per_month = 1100
+rent_per_month = 1500
 rent_utility = 100
 save_per_month = 1000
 saved_for_dp = 5000
-initial_price = 250000
+initial_price = 300000
+
+# add closing cost to overall price
+closing_cost = .05
+initial_price += initial_price * closing_cost
+
 
 mor_ins = .01
 mor_int = .045
@@ -53,24 +58,39 @@ def getHouseCost(dp):
 # find min in this when done
 costs = []
 dps = []
+hcs = []
 
 while month < years * 12:
   month += 1
   spent += rent_per_month + rent_utility + save_per_month
   saved_for_dp += save_per_month
   dps.append(saved_for_dp)
-  costs.append(spent + getHouseCost(saved_for_dp))
+  hc = getHouseCost(saved_for_dp)
+  costs.append(spent + hc)
+  hcs.append(hc)
+
 print("Months to save: {}".format(costs.index(min(costs)) + 1))
-total = min(costs)
 print("Including ALL variables, i.e. mortgage, taxes, insurance, maint.")
 print()
-print("min possible: {}".format(total))
-print("min monthly expense: {}".format(total/years/12))
-print("max possible (worst timing): {}".format(max(costs)))
-print("max monthly expense: {}".format(max(costs)/years/12))
-print("down payment for best: {}".format(dps[costs.index(total)]))
+print("min $ spent possible to pay off house: {}".format(min(costs)))
+idx_min = costs.index(min(costs))
+print("min monthly expense of house: {}".format(hcs[idx_min]/years/12))
+idx_max = costs.index(max(costs))
+print("max possible (worst timing): {}".format(costs[idx_max]))
+print("max monthly expense of house: {}".format(hcs[idx_max]/years/12))
+print("down payment for best: {}".format(dps[idx_min]))
 print()
-print("The following is an overestimate (by a little) but a good estimate:")
-print()
-print("Needed yearly income (best): {}".format(total/years * 3))
-print("Needed yearly income (worst): {}".format(max(costs)/years * 3))
+
+year = 0
+price_and_mort = initial_price - dps[idx_min]
+while year < years:
+  price_and_mort += (initial_price - dps[idx_min]) * mor_int
+  year += 1
+print("min yearly income needed (best time to buy): {}".format(price_and_mort/years * 3))
+
+year = 0
+price_and_mort = initial_price
+while year < years:
+  price_and_mort += initial_price * mor_int
+  year += 1
+print("max yearly income needed (worse time to buy): {}".format(price_and_mort/years * 3))
