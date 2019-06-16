@@ -6,7 +6,7 @@ rent_per_month = 1100
 rent_utility = 100
 save_per_month = 1000
 saved_for_dp = 5000
-initial_price = 350000
+initial_price = 250000
 
 mor_ins = .01
 mor_int = .045
@@ -62,7 +62,7 @@ while month < years * 12:
   costs.append(spent + getHouseCost(saved_for_dp))
 print("Months to save: {}".format(costs.index(min(costs)) + 1))
 total = min(costs)
-print("Including ALL variables, i.e. morgage, taxes, insurance, maint.")
+print("Including ALL variables, i.e. mortgage, taxes, insurance, maint.")
 print()
 print("min possible: {}".format(total))
 print("min monthly expense: {}".format(total/years/12))
