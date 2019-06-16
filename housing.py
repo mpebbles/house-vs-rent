@@ -14,8 +14,6 @@ prop_tax = .0079
 house_utility = 400
 house_ins = 300
 
-# percent income for mortgage payment
-qualify = .33
 
 month = 0
 spent = 0
