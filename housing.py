@@ -14,7 +14,7 @@ prop_tax = .0079
 house_utility = 400
 house_ins = 300
 
-# percent income for morgage payment
+# percent income for mortgage payment
 qualify = .33
 
 month = 0
@@ -31,7 +31,7 @@ def getHouseCost(dp):
     h_month += 1
     # roughly equates to monthly payment
     cost += remaining/years/12 + (remaining * mor_int)/12
-    # if morg insurance needed
+    # if mortg insurance needed
     if remaining > 0:
       if dp/remaining < .2:
         cost += (remaining * mor_ins)/12
