@@ -17,6 +17,7 @@ mor_ins = .01
 mor_int = .045
 prop_tax = .0079
 house_utility = 400
+hoa = 300
 house_ins = 300
 
 
@@ -53,6 +54,9 @@ def getHouseCost(dp):
     # normal insurance
     cost += house_ins
 
+    # HOA fee
+    cost += hoa
+
   return cost
 
 # find min in this when done
@@ -69,18 +73,19 @@ while month < years * 12:
   costs.append(spent + hc)
   hcs.append(hc)
 
+print("***********************************************************")
 print("Months to save: {}".format(costs.index(min(costs)) + 1))
 print("Including ALL variables, i.e. mortgage, taxes, insurance, maint.")
 print()
 print("min $ spent possible to pay off house: {}".format(min(costs)))
 idx_min = costs.index(min(costs))
-print("min monthly expense of house: {}".format(hcs[idx_min]/years/12))
+print("min monthly expense of house: {}".format(min(hcs)/years/12))
 idx_max = costs.index(max(costs))
-print("max possible (worst timing): {}".format(costs[idx_max]))
-print("max monthly expense of house: {}".format(hcs[idx_max]/years/12))
+print("max $ spent possible to pay off house: {}".format(costs[idx_max]))
+print("max monthly expense of house: {}".format(max(hcs)/years/12))
 print("down payment for best: {}".format(dps[idx_min]))
 print()
-
+print("Assuming monthly income must be 3x the mortgage payment:")
 year = 0
 price_and_mort = initial_price - dps[idx_min]
 while year < years:
